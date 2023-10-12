@@ -47,27 +47,33 @@ decerts.add('Тирамису');
 decerts.add('Чизкейк');
 
 const povar = new Map();
-povar.set('Виктор', pizza);
-povar.set('Ольга', sushi);
-povar.set('Дмитрий', decerts);
+povar.set(pizza, 'Виктор');
+povar.set(sushi, 'Ольга');
+povar.set(decerts, 'Дмитрий');
 
 const orderAlex = new Set(['Пепперони', 'Тирамису']);
 const orderMary = new Set(['Калифорния', 'Маргарита']);
 const orderIrina = new Set(['Чизкейк']);
 
+const order = new Map();
+order.set('Алексей', ['Пепперони', 'Тирамису']);
+order.set('Мария', ['Калифорния', 'Маргарита']);
+order.set('Ирина', ['Чизкейк']);
 
-console.log('Алексей заказал');
-orderAlex.forEach(element => {
 
-    console.log(element);
+order.forEach(function (value, key) {
+    console.log(key + " заказал" + ': ' + value);
+    value.forEach(element => {
 
-});
+        if (pizza.has(element)) {
+            console.log(element + " готовит " + povar.get(pizza));
+        }
+        if (sushi.has(element)) {
+            console.log(element + " готовит " + povar.get(sushi));
+        }
+        if (decerts.has(element)) {
+            console.log(element + " готовит " + povar.get(decerts));
+        }
 
-console.log('Заказ готовит');
-orderAlex.forEach(element => {
-
-    if (pizza.has(element)) {
-
-    }
-
-});
+    });
+})
