@@ -25,7 +25,6 @@
         <button type="submit">Отправить</button>
     </form>
 
-
     <div class="feedback"></div>
 
     <script>
@@ -33,23 +32,25 @@
         const feedbackMain = document.querySelector('.feedback');
         const form = document.querySelector('.inputbox');
 
-        data.forEach(element => {
+        function load(data) {
+            data.forEach(element => {
 
-            const feedbackTitle = document.createElement('h3');
-            feedbackTitle.classList.add('feedback__title');
-            feedbackTitle.textContent = element.name;
+                const feedbackTitle = document.createElement('h3');
+                feedbackTitle.classList.add('feedback__title');
+                feedbackTitle.textContent = element.name;
 
-            const feedbackText = document.createElement('p');
-            feedbackText.classList.add('feedback__text');
-            feedbackText.textContent = element.text;
+                const feedbackText = document.createElement('p');
+                feedbackText.classList.add('feedback__text');
+                feedbackText.textContent = element.text;
 
+                // вставка созданных элементов
+                feedbackMain.append(feedbackTitle);
+                feedbackMain.append(feedbackText);
 
-            // вставка созданных элементов
-            feedbackMain.append(feedbackTitle);
-            feedbackMain.append(feedbackText);
+            });
+        }
 
-
-        });
+        window.onload = load(data);
 
         form.addEventListener('submit', getFormValue);
 
@@ -59,14 +60,20 @@
             const name = form.querySelector('.inputbox__name');
             const text = form.querySelector('.inputbox__text');
 
-            const newFeedback = {
+            const newFeedback = [{
                 name: name.value,
                 text: text.value
+            }];
+
+            if (text.value.length < 50) {
+                throw new Error('Вы ввели менее 50 символов')
+            } else if (text.value.length > 500) {
+                throw new Error('Вы ввели более 500 символов')
             }
-
-            console.log(name.value, text.value);
+            name.value = '';
+            text.value = '';
+            load(newFeedback);
         }
-
 
     </script>
 </body>
