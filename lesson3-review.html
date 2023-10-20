@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        .margin {
+            margin-bottom: 20px;
+        }
+
+        details {
+            margin-bottom: 15px;
+        }
+
+        .display {
+            display: none;
+        }
+    </style>
+
+    <p><a href="lesson-3.html">На страницу добавления отзывов</a></p>
+
+
+
+    <div class="feedback"></div>
+
+    <script>
+
+        let feedbacksList = JSON.parse(localStorage.getItem('feedbacksList')) || [];
+        const feedbackMain = document.querySelector('.feedback');
+
+
+        function load(feedbacksList) {
+            feedbacksList.forEach(element => {
+
+                const feedbackDetails = document.createElement('details');
+
+                const feedbackTitle = document.createElement('summary');
+                feedbackTitle.textContent = element.name;
+
+                const feedbackText = document.createElement('p');
+                feedbackText.textContent = element.text;
+
+
+                const feedbackButton = document.createElement('button');
+                feedbackButton.classList.add('margin')
+                feedbackButton.textContent = 'Удалить отзыв';
+
+                // вставка созданных элементов
+                feedbackMain.append(feedbackDetails);
+                feedbackDetails.append(feedbackTitle);
+                feedbackDetails.append(feedbackText);
+                feedbackDetails.append(feedbackButton);
+
+                feedbackButton.addEventListener('click', removeFunction);
+
+                function removeFunction() {
+
+                    feedbackDetails.classList.add('display');
+                    feedbacksList.splice(feedbacksList.indexOf(element), 1);
+                    localStorage.setItem('feedbacksList', JSON.stringify(feedbacksList));
+
+                }
+
+            });
+        }
+
+
+
+        load(feedbacksList);
+
+
+
+
+    </script>
+
+</body>
+
+</html>

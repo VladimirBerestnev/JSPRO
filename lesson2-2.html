@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<br lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lesson2-2.js"></script>
+</head>
+
+<body>
+
+    <style>
+        .feedback__text {
+            width: 500px;
+        }
+    </style>
+
+    <form class="inputbox">
+        <p> Введите Ваше имя</p>
+        <input class="inputbox__name" type="text">
+        <p> Введите отзыв</p>
+        <textarea class="inputbox__text" id="" cols="30" rows="10"></textarea>
+        </br>
+        <button type="submit">Отправить</button>
+    </form>
+
+    <div class="feedback"></div>
+
+    <script>
+        const data = JSON.parse(feedbacks);
+        const feedbackMain = document.querySelector('.feedback');
+        const form = document.querySelector('.inputbox');
+
+        function load(data) {
+            data.forEach(element => {
+
+                const feedbackTitle = document.createElement('h3');
+                feedbackTitle.classList.add('feedback__title');
+                feedbackTitle.textContent = element.name;
+
+                const feedbackText = document.createElement('p');
+                feedbackText.classList.add('feedback__text');
+                feedbackText.textContent = element.text;
+
+                // вставка созданных элементов
+                feedbackMain.append(feedbackTitle);
+                feedbackMain.append(feedbackText);
+
+            });
+        }
+
+        window.onload = load(data);
+
+        form.addEventListener('submit', getFormValue);
+
+        function getFormValue(event) {
+            event.preventDefault();
+
+            const name = form.querySelector('.inputbox__name');
+            const text = form.querySelector('.inputbox__text');
+
+            const newFeedback = [{
+                name: name.value,
+                text: text.value
+            }];
+
+            if (text.value.length < 50) {
+                throw new Error('Вы ввели менее 50 символов')
+            } else if (text.value.length > 500) {
+                throw new Error('Вы ввели более 500 символов')
+            }
+            name.value = '';
+            text.value = '';
+            load(newFeedback);
+        }
+
+    </script>
+</body>
+
+</html>
