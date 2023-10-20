@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<br lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+    <style>
+        .feedback__text {
+            width: 500px;
+        }
+    </style>
+
+    <form class="inputbox">
+        <p> Продукт</p>
+        <input class="inputbox__name" type="text">
+        <p> Отзыв</p>
+        <textarea class="inputbox__text" id="" cols="30" rows="10"></textarea>
+        </br>
+        <button type="submit">Добавить отзыв</button>
+    </form>
+
+    <p><a href="lesson3-review.html">На страницу с отзывами</a></p>
+
+    <script>
+
+        let feedbacksList = JSON.parse(localStorage.getItem('feedbacksList')) || [];
+
+        const form = document.querySelector('.inputbox');
+
+        form.addEventListener('submit', getFormValue);
+
+        function getFormValue(event) {
+            event.preventDefault();
+
+            const name = form.querySelector('.inputbox__name');
+            const text = form.querySelector('.inputbox__text');
+
+            const newFeedback = {
+                name: name.value,
+                text: text.value
+            };
+
+            name.value = '';
+            text.value = '';
+
+            feedbacksList.push(newFeedback);
+
+            localStorage.setItem('feedbacksList', JSON.stringify(feedbacksList));
+        }
+
+
+
+
+    </script>
+</body>
+
+</html>
